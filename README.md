@@ -1,6 +1,4 @@
-## Project title
-
-- CCNA Project 04 – Branch Edge Services: DHCP, NAT, ACL, and Internet Access Control
+# CCNA Project 04 – Branch Edge Services: DHCP, NAT, ACL, and Internet Access Control
 
 ## Objective
 
