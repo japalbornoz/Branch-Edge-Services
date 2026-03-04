@@ -65,7 +65,7 @@ This project does not include:
 
 ---
 
-## Topology Summary
+## Design Summary
 The branch LAN consists of a Layer 2 access switch connected to a branch router using an 802.1Q trunk. Multiple PCs are distributed across separate VLANs representing IT, STAFF, and GUEST users. An internal DNS server is connected to the branch switch in the management/services VLAN.
 
 The branch router connects to an ISP router through a point-to-point WAN segment. A public web server is connected on the ISP side to simulate an internet-hosted resource. Internal clients resolve the web server name through DNS and reach it using NAT/PAT through the branch edge router.
@@ -176,6 +176,20 @@ Denied:
 
 ---
 
+## Validation Goals
+This project validates the following:
+
+- clients receive correct IP settings via DHCP
+- remote guest clients in Version 2 receive DHCP settings through relay
+- user VLANs can reach their default gateways
+- DNS name resolution works correctly
+- clients can reach the public web server by IP address
+- clients can reach the public web server by DNS name
+- NAT translations are created for outbound sessions
+- ACL restrictions block unauthorized traffic while allowing approved traffic
+
+---
+
 ## Validation Artifacts
 Validation output for this project is documented in the `/validation` folder and is separated into:
 
@@ -189,20 +203,6 @@ Included validation areas:
 - NAT translation verification
 - ACL and guest-policy enforcement testing
 - end-to-end connectivity tests
-
----
-
-## Validation Goals
-This project validates the following:
-
-- clients receive correct IP settings via DHCP
-- remote guest clients in Version 2 receive DHCP settings through relay
-- user VLANs can reach their default gateways
-- DNS name resolution works correctly
-- clients can reach the public web server by IP address
-- clients can reach the public web server by DNS name
-- NAT translations are created for outbound sessions
-- ACL restrictions block unauthorized traffic while allowing approved traffic
 
 ---
 
@@ -282,11 +282,6 @@ This extension demonstrates:
 
 ## What I Learned
 Through this project, I practiced how branch edge services work together to support endpoint connectivity and policy enforcement. I reinforced the relationship between VLAN segmentation, DHCP address assignment, DNS dependency, NAT/PAT operation, and ACL-based traffic filtering. I also improved my ability to validate network services step by step and troubleshoot configuration errors affecting user access.
-
----
-
-## Portfolio Positioning
-This is a lab project built in Cisco Packet Tracer for skills demonstration and portfolio use. It is not based on production administration experience. The project is intended to show practical understanding of branch routing, user services, traffic control, validation methodology, and troubleshooting workflow relevant to entry-level networking roles.
 
 ---
 
