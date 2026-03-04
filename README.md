@@ -29,7 +29,7 @@ The objective of this project is to build and validate a branch edge design that
 
 ---
 
-## Topology
+## ## Topology Summary
 
 ### Version 1 Topology
 ![Project 04 Version 1 Topology](topology/project04-v1-topology.png)
@@ -73,12 +73,18 @@ The branch router connects to an ISP router through a point-to-point WAN segment
 ---
 
 ## Devices Used
+
+### Version 1
 - 1 Cisco 2911 Branch Router (R1)
 - 1 Cisco 2911 ISP Router (ISP)
 - 1 Cisco 2960 Switch (SW1)
 - 6 PCs
 - 1 Internal DNS Server
 - 1 Public Web Server
+
+### Version 2 Additional Devices
+- 1 Cisco 2911 Router (R2)
+- 1 Cisco 2960 Switch (SW2)
 
 ---
 
@@ -186,14 +192,17 @@ Included validation areas:
 
 ---
 
-## Validation Artifacts
-Validation output for this project is documented in the `/validation` folder, including:
+## Validation Goals
+This project validates the following:
 
-- DHCP lease verification
-- DNS resolution testing
-- NAT translation verification
-- ACL enforcement testing
-- end-to-end connectivity tests
+- clients receive correct IP settings via DHCP
+- remote guest clients in Version 2 receive DHCP settings through relay
+- user VLANs can reach their default gateways
+- DNS name resolution works correctly
+- clients can reach the public web server by IP address
+- clients can reach the public web server by DNS name
+- NAT translations are created for outbound sessions
+- ACL restrictions block unauthorized traffic while allowing approved traffic
 
 ---
 
