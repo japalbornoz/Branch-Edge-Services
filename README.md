@@ -222,3 +222,52 @@ Through this project, I practiced how branch edge services work together to supp
 
 ## Portfolio Positioning
 This is a lab project built in Cisco Packet Tracer for skills demonstration and portfolio use. It is not based on production administration experience. The project is intended to show practical understanding of branch routing, user services, traffic control, validation methodology, and troubleshooting workflow relevant to entry-level networking roles.
+
+---
+
+## Version 2 Extension – Remote Guest Segment with DHCP Relay
+
+As an extension of the base Project 04 design, VLAN 30 (GUEST) was moved off the main branch router and placed behind a second router (R2). In this version, R2 acts as the default gateway for the guest subnet and relays DHCP requests to the centralized DHCP server on R1 using `ip helper-address`.
+
+This design variation demonstrates how centralized branch services can still support a remote subnet while keeping local policy enforcement at the remote gateway.
+
+### Version 2 Design Changes
+Compared with Version 1, the following changes were introduced:
+
+- VLAN 30 was removed from the router-on-a-stick design on R1
+- R2 was added as the default gateway for the guest subnet
+- R2 received upstream connectivity from R1 over a routed point-to-point link
+- DHCP for VLAN 30 remained centralized on R1 and was delivered through DHCP relay
+- guest ACL policy enforcement moved from R1 to R2
+- R1 continued to provide DNS reachability, NAT/PAT, and simulated internet access
+
+### Version 2 Objective
+The objective of Version 2 was to extend the base branch edge services lab by introducing a remote guest segment while preserving centralized DHCP, DNS, and internet access services.
+
+### Version 2 Key Configurations
+Version 2 introduced the following technical changes:
+
+- `ip helper-address` configured on R2 for DHCP relay
+- static route on R1 toward `192.168.30.0/24` via R2
+- default route on R2 toward R1
+- NAT inside role added on the R1 interface facing R2
+- guest access-control policy applied inbound on the R2 guest-facing interface
+
+### Version 2 Validation Summary
+Validation confirmed that:
+
+- VLAN 30 clients successfully received DHCP addressing through relay
+- VLAN 30 clients resolved `www.branchlab.com` using the internal DNS server
+- VLAN 30 clients successfully reached the public web server
+- VLAN 30 clients were denied access to internal branch subnets such as VLAN 10 and VLAN 20
+- centralized branch services remained functional while the guest subnet was moved behind a separate router
+
+### Version 2 Skills Demonstrated
+This extension demonstrates:
+
+- DHCP relay operation
+- routed subnet extension
+- centralized service design
+- distributed policy enforcement
+- guest network isolation
+- troubleshooting of switchport mode mismatch and missing route conditions
