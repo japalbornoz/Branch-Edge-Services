@@ -29,6 +29,20 @@ The objective of this project is to build and validate a branch edge design that
 
 ---
 
+## Topology
+
+### Version 1 Topology
+![Project 04 Version 1 Topology](topology/project04-v1-topology.png)
+
+Version 1 uses a centralized branch edge design. R1 provides router-on-a-stick inter-VLAN routing for VLAN 10, VLAN 20, VLAN 30, and VLAN 99, along with DHCP, NAT/PAT, and ACL-based policy enforcement. DNS-SRV is hosted internally in VLAN 99, while WEB-SRV is placed on the ISP/public side to validate internet access by both IP address and hostname.
+
+### Version 2 Topology
+![Project 04 Version 2 Topology](topology/project04-v2-topology.png)
+
+Version 2 extends the base design by moving VLAN 30 behind R2. In this version, R2 acts as the default gateway for the guest subnet and uses DHCP relay to forward client broadcast requests to the centralized DHCP server on R1. R1 continues to provide centralized DHCP, DNS reachability, NAT/PAT, and upstream internet access, while guest policy enforcement is applied locally on R2.
+
+---
+
 ## Scope
 This project includes the following:
 
