@@ -29,7 +29,7 @@ The objective of this project is to build and validate a branch edge design that
 
 ---
 
-## ## Topology Summary
+## Topology Summary
 
 ### Version 1 Topology
 ![Project 04 Version 1 Topology](topology/project04-v1-topology.png)
@@ -217,26 +217,6 @@ Troubleshooting cases for this project are documented in the `/troubleshooting` 
 
 ---
 
-## Key Commands Used
-
-### Switch Validation
-- `show vlan brief`
-- `show interfaces trunk`
-- `show ip interface brief`
-- `show running-config`
-
-### Router Validation
-- `show ip interface brief`
-- `show ip route`
-- `show ip dhcp binding`
-- `show ip dhcp pool`
-- `show access-lists`
-- `show ip nat translations`
-- `show ip nat statistics`
-- `show running-config`
-
----
-
 ## Skills Demonstrated
 This project demonstrates practical skills in:
 
@@ -248,33 +228,6 @@ This project demonstrates practical skills in:
 - end-to-end validation using CLI and host testing
 - troubleshooting Layer 2, Layer 3, and service dependency issues
 - extending a base design using DHCP relay and a remote routed subnet
-
----
-
-## What I Learned
-Through this project, I practiced how branch edge services work together to support endpoint connectivity and policy enforcement. I reinforced the relationship between VLAN segmentation, DHCP address assignment, DNS dependency, NAT/PAT operation, and ACL-based traffic filtering. I also improved my ability to validate network services step by step and troubleshoot configuration errors affecting user access.
-
----
-
-## Tools Used
-- Cisco Packet Tracer
-- CLI verification using show commands
-- Markdown documentation
-- topology screenshots and configuration exports
-
----
-
-## Folder Structure
-- `/topology` – topology image and addressing plan
-- `/configs` – device configurations
-- `/validation` – command outputs and test results
-- `/troubleshooting` – failure scenarios and fixes
-- `/diagrams` – logical diagram files
-
----
-
-## Portfolio Positioning
-This is a lab project built in Cisco Packet Tracer for skills demonstration and portfolio use. It is not based on production administration experience. The project is intended to show practical understanding of branch routing, user services, traffic control, validation methodology, and troubleshooting workflow relevant to entry-level networking roles.
 
 ---
 
@@ -324,3 +277,50 @@ This extension demonstrates:
 - distributed policy enforcement
 - guest network isolation
 - troubleshooting of switchport mode mismatch and missing route conditions
+
+---
+
+## What I Learned
+Through this project, I practiced how branch edge services work together to support endpoint connectivity and policy enforcement. I reinforced the relationship between VLAN segmentation, DHCP address assignment, DNS dependency, NAT/PAT operation, and ACL-based traffic filtering. I also improved my ability to validate network services step by step and troubleshoot configuration errors affecting user access.
+
+---
+
+## Portfolio Positioning
+This is a lab project built in Cisco Packet Tracer for skills demonstration and portfolio use. It is not based on production administration experience. The project is intended to show practical understanding of branch routing, user services, traffic control, validation methodology, and troubleshooting workflow relevant to entry-level networking roles.
+
+---
+
+## Key Commands Used
+
+### Switch Validation
+- `show vlan brief`
+- `show interfaces trunk`
+- `show ip interface brief`
+- `show running-config`
+
+### Router Validation
+- `show ip interface brief`
+- `show ip route`
+- `show ip dhcp binding`
+- `show ip dhcp pool`
+- `show access-lists`
+- `show ip nat translations`
+- `show ip nat statistics`
+- `show running-config`
+
+---
+
+## Folder Structure
+- `/topology` – topology image and addressing plan
+- `/configs` – device configurations
+- `/validation` – command outputs and test results
+- `/troubleshooting` – failure scenarios and fixes
+- `/diagrams` – logical diagram files
+
+---
+
+## Tools Used
+- Cisco Packet Tracer
+- CLI verification using show commands
+- Markdown documentation
+- topology screenshots and configuration exports
