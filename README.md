@@ -7,6 +7,17 @@ The topology includes multiple user VLANs connected to a branch switch, a branch
 
 ---
 
+## Versions Implemented
+
+This project was built in two versions:
+
+- **Version 1** – Base branch edge services design using router-on-a-stick on R1 for VLAN 10, VLAN 20, VLAN 30, and VLAN 99
+- **Version 2** – Extended design where VLAN 30 was moved behind R2 and supported through DHCP relay back to R1
+
+Version 1 is the primary implementation for this project. Version 2 is included as an advanced extension showing centralized DHCP with a remote guest subnet.
+
+---
+
 ## Objective
 The objective of this project is to build and validate a branch edge design that provides:
 
@@ -26,7 +37,7 @@ This project includes the following:
 - DHCP pools for client VLANs
 - internal DNS service for client name resolution
 - NAT overload (PAT) for inside users reaching external networks
-- standard and extended ACLs for internet access control
+- extended ACLs for internal access restriction and controlled public reachability
 - validation of end-to-end connectivity and policy enforcement
 - troubleshooting scenarios for DHCP, DNS, NAT, and ACL issues
 
@@ -108,12 +119,12 @@ Example:
 The branch router performs NAT overload so multiple inside clients can share a single public-facing interface when accessing external networks.
 
 ### ACLs
-ACLs are used to enforce traffic policy between internal VLANs and internet destinations.
+ACLs are used to enforce traffic policy between internal VLANs and public destinations.
 
 Policy examples:
-- IT users are allowed broader access
-- STAFF users are denied access to management resources but allowed internet access
-- GUEST users are denied access to internal branch networks and allowed internet-only access
+- IT users are allowed broad access to internal and public resources
+- STAFF users are allowed DNS and public access, but denied general access to management/services resources
+- GUEST users are allowed DNS and public access, but denied access to internal branch subnets
 
 ---
 
@@ -127,32 +138,37 @@ Permitted:
 
 ### VLAN 20 – STAFF
 Permitted:
-- DNS service
+- DNS queries to the internal DNS server
+- VLAN 10 access
 - external/public resources
 
 Denied:
-- management/services VLAN access
+- general access to management/services VLAN resources
 
 ### VLAN 30 – GUEST
 Permitted:
-- DNS service
+- DNS queries to the internal DNS server
 - external/public resources
 
 Denied:
 - access to internal branch VLANs
+- general access to management/services VLAN resources
 
 ---
 
-## Validation Goals
-This project validates the following:
+## Validation Artifacts
+Validation output for this project is documented in the `/validation` folder and is separated into:
 
-- clients receive correct IP settings via DHCP
-- user VLANs can reach their default gateways
-- DNS name resolution works correctly
-- clients can reach the public web server by IP address
-- clients can reach the public web server by DNS name
-- NAT translations are created for outbound sessions
-- ACL restrictions block unauthorized traffic while allowing approved traffic
+- **Version 1** validation for the base branch edge services topology
+- **Version 2** validation for the remote guest segment and DHCP relay extension
+
+Included validation areas:
+- DHCP lease verification
+- DHCP relay verification
+- DNS resolution testing
+- NAT translation verification
+- ACL and guest-policy enforcement testing
+- end-to-end connectivity tests
 
 ---
 
@@ -170,11 +186,11 @@ Validation output for this project is documented in the `/validation` folder, in
 ## Troubleshooting Scenarios
 Troubleshooting cases for this project are documented in the `/troubleshooting` folder and include examples such as:
 
-- incorrect DHCP pool configuration
-- missing or incorrect DNS server assignment
-- NAT inside/outside misconfiguration
-- ACL applied on the wrong interface or in the wrong direction
-- missing route to the ISP or public server network
+- Packet Tracer DHCP endpoint behavior during early Version 1 testing
+- DNS reachability versus DNS application traffic under ACL restrictions
+- switchport mode mismatch affecting Version 2 DHCP relay
+- missing route conditions affecting return reachability to the remote guest subnet
+- ACL placement and policy validation on the correct gateway interface
 
 ---
 
@@ -195,6 +211,20 @@ Troubleshooting cases for this project are documented in the `/troubleshooting` 
 - `show ip nat translations`
 - `show ip nat statistics`
 - `show running-config`
+
+---
+
+## Skills Demonstrated
+This project demonstrates practical skills in:
+
+- VLAN segmentation and inter-VLAN routing
+- DHCP server configuration
+- DNS-supported client name resolution
+- NAT/PAT for outbound internet simulation
+- ACL-based traffic control
+- end-to-end validation using CLI and host testing
+- troubleshooting Layer 2, Layer 3, and service dependency issues
+- extending a base design using DHCP relay and a remote routed subnet
 
 ---
 
