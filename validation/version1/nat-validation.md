@@ -55,10 +55,32 @@ ping www.branchlab.com
 - inside local addresses are translated through the WAN interface
 
 ## Observed Result
-Validation succeeded. Internal clients in the permitted VLANs were able to reach the public server, and NAT translations were created on R1 as expected.
+Validation succeeded. Internal clients in the permitted VLANs was translated using NAT overload on R1, and dynamic translations were visible during active testing.
 
 ## Supporting Evidence
-- successful client ping to `198.51.100.10`
-- successful client ping to `www.branchlab.com`
-- `show ip nat translations`
-- `show ip nat statistics`
+### R1 NAT Translations
+```
+R1#show ip nat translations
+Pro  Inside global     Inside local       Outside local      Outside global
+icmp 203.0.113.2:13    192.168.10.21:13   198.51.100.10:13   198.51.100.10:13
+icmp 203.0.113.2:14    192.168.10.21:14   198.51.100.10:14   198.51.100.10:14
+icmp 203.0.113.2:15    192.168.10.21:15   198.51.100.10:15   198.51.100.10:15
+icmp 203.0.113.2:16    192.168.10.21:16   198.51.100.10:16   198.51.100.10:16
+```
+```
+R1#show ip nat statistics
+Total translations: 4 (0 static, 4 dynamic, 4 extended)
+Outside Interfaces: GigabitEthernet0/0
+Inside Interfaces: GigabitEthernet0/1.10 , GigabitEthernet0/1.20 , GigabitEthernet0/1.30 , GigabitEthernet0/1.99
+Hits: 26  Misses: 28
+Expired translations: 24
+Dynamic mappings:
+```
+
+### Client Traffic Generation (Example)
+
+Traffic was generated from an internal client (example shown in NAT table: `192.168.10.21`) by pinging the public web server 198.51.100.10 and hostname `www.branchlab.com`.
+
+### Additional Validation Note
+
+NAT/PAT behavior was also tested from other internal VLANs (VLAN 20 and VLAN 30). Results were consistent: public reachability succeeded and translations were created on R1. Only one example translation table is included here to avoid repeating identical outputs.
