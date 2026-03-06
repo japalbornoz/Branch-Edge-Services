@@ -193,8 +193,8 @@ Packets: Sent = 4, Received = 4, Lost = 0 (0% loss)
 
 ---
 
-### ACL validations
-#### R1 ACL configurations 
+### Router Evidence (R1)
+#### ACL Definitions and Match Counters
 ```
 R1#sh access-lists 
 Standard IP access list 1
@@ -216,14 +216,16 @@ Extended IP access list VLAN30-IN
     60 permit ip 192.168.30.0 0.0.0.255 any (4 match(es))
 ```
 
-##### ACL applied in R1's subinterface G0/1.20 
+#### ACL Application on Subinterfaces (Inbound)
+
+##### VLAN 20 ACL applied on G0/1.20
 ```
 R1#sh ip interface g0/1.20 | include access list
   Outgoing access list is not set
   Inbound  access list is VLAN20-IN
 ```
 
-##### ACL applied in R1's subinterface G0/1.30
+##### VLAN 30 ACL applied on G0/1.30
 ```
 R1#sh ip interface g0/1.30 | include access list
   Outgoing access list is not set
