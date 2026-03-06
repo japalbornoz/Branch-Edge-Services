@@ -53,7 +53,7 @@ show ip dhcp pool
 
 ### Client DHCP Evidence (ipconfig)
 
-#### VLAN 10 Client (example output)
+#### VLAN 10 PC1 (example output)
 ```
 C:\>ipconfig
 
