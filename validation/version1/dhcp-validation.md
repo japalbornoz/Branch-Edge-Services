@@ -68,36 +68,6 @@ FastEthernet0 Connection:(default port)
                                      192.168.10.1
 ```
 
-#### VLAN 20 Client (example output)
-```
-C:\>ipconfig
-
-FastEthernet0 Connection:(default port)
-
-   Connection-specific DNS Suffix..:
-   Link-local IPv6 Address.........: FE80::260:5CFF:FE61:3A8A
-   IPv6 Address....................: ::
-   IPv4 Address....................: 192.168.20.21
-   Subnet Mask.....................: 255.255.255.0
-   Default Gateway.................: ::
-                                     192.168.20.1
-```
-
-#### VLAN 30 Client (example output)
-```
-C:\>ipconfig
-
-FastEthernet0 Connection:(default port)
-
-   Connection-specific DNS Suffix..:
-   Link-local IPv6 Address.........: FE80::2D0:FFFF:FE04:DA35
-   IPv6 Address....................: ::
-   IPv4 Address....................: 192.168.30.21
-   Subnet Mask.....................: 255.255.255.0
-   Default Gateway.................: ::
-                                     192.168.30.1
-```
-
 #### R1 DHCP Bindings
 ```
 R1#sh ip dhcp binding 
