@@ -48,8 +48,9 @@ ACL design allowed DNS application traffic without allowing general ICMP to the 
 
 ## Supporting Evidence
 ### DNS Server Evidence (A Record)
-  ![DNS A record on DNS-SRV (www.branchlab.com -> 198.51.100.10)](screenshots/dns-a-record.png)
-
+  <img src="screenshots/dns-a-record.png" width="800">
+  <img src="screenshots/dns-traffic-flow.png" width="800">
+  
 ### Client Evidence (Example: VLAN 10 PC1)
 #### VLAN 10 PC1 – DNS Server Assignment
 ```
