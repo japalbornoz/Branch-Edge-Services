@@ -6,38 +6,51 @@ Validate that VLAN 30 clients behind R2 successfully receive DHCP configuration 
 ## Scope
 This validation confirms:
 
-- R2 acts as the default gateway for VLAN 30
-- R2 relays DHCP requests to R1 using `ip helper-address`
-- R1 provides DHCP leases for the `192.168.30.0/24` subnet
-- VLAN 30 clients receive correct gateway and DNS settings
+- VLAN 30 clients receive IP addresses in `192.168.30.0/24`
+- the default gateway for VLAN 30 clients is `192.168.30.1` (R2)
+- R1 records DHCP leases for VLAN 30 clients
+- R2 obtains upstream connectivity via DHCP on the routed link to R1 (`203.0.114.0/30`)
 
 ## Topology Context
-In Version 2, VLAN 30 was moved behind R2. R2 connects upstream to R1 using a routed link and forwards DHCP requests to R1.
+In Version 2, VLAN 30 (GUEST) is moved behind R2. R2 acts as the default gateway for VLAN 30 and relays DHCP requests to R1 using `ip helper-address`. R1 remains the centralized DHCP server.
 
-## Key Configuration Elements
-- R2 guest-facing interface: `192.168.30.1/24`
-- R2 relay target: `ip helper-address 203.0.114.1`
-- R1 DHCP pool: `VLAN30_GUEST`
-- R1 route to `192.168.30.0/24` via R2
+## Verification Commands
 
-## Validation Steps
-1. Set VLAN 30 clients to DHCP
-2. Confirm clients receive addresses in `192.168.30.0/24`
-3. Confirm default gateway is `192.168.30.1`
-4. Confirm DNS server is `192.168.99.10`
-5. Verify DHCP lease visibility on R1
+### On VLAN 30 PC5
+```text
+ipconfig
+```
 
-## Expected Results
-- VLAN 30 clients receive valid DHCP leases
-- gateway is assigned as `192.168.30.1`
-- DNS server is assigned as `192.168.99.10`
-- lease appears in R1 DHCP bindings
+### On R1
+```
+show ip dhcp binding
+```
+
+### Supporting Evidence
+### VLAN 30 PC5 DHCP Lease (Example)
+```
+C:\>ipconfig
+
+FastEthernet0 Connection:(default port)
+
+   IPv4 Address....................: 192.168.30.21
+   Subnet Mask.....................: 255.255.255.0
+   Default Gateway.................: 192.168.30.1
+```
+
+### R1 DHCP Bindings (VLAN 30 and R2 WAN Lease)
+```
+R1#show ip dhcp binding
+IP address       Client-ID/              Lease expiration        Type
+                 Hardware address
+192.168.10.21    0000.0010.AAAA           --                     Automatic
+192.168.10.22    0000.0010.BBBB           --                     Automatic
+192.168.20.22    0000.0020.CCCC           --                     Automatic
+192.168.20.23    0000.0020.DDDD           --                     Automatic
+192.168.30.21    0000.0030.FFFF           --                     Automatic
+192.168.30.22    0000.0030.EEEE           --                     Automatic
+203.0.114.2      0002.1602.B703           --                     Automatic
+```
 
 ## Observed Result
-Validation succeeded. VLAN 30 clients received DHCP addressing through R2 relay and were able to use the assigned default gateway and DNS server values successfully.
-
-## Supporting Evidence
-Suggested evidence to include:
-- VLAN 30 PC `ipconfig`
-- R1 `show ip dhcp binding`
-- R2 `show running-config`
+Validation succeeded. VLAN 30 clients received DHCP leases in `192.168.30.0/24` with default gateway `192.168.30.1` (R2). R1 recorded VLAN 30 client leases and also issued an upstream DHCP lease (`203.0.114.2`) for R2 on the routed link.
