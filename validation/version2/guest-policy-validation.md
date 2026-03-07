@@ -67,6 +67,11 @@ Ping statistics for 192.168.20.21:
 
 ### ACL Application Evidence
 ```
+R1#sh ip interface g0/1.20 | include access list
+  Outgoing access list is not set
+  Inbound  access list is VLAN20-IN
+```
+```
 R2#show ip interface g0/1 | include access list
   Outgoing access list is not set
   Inbound  access list is VLAN30-IN
