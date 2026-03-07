@@ -220,14 +220,14 @@ Extended IP access list VLAN30-IN
 
 ##### VLAN 20 ACL applied on G0/1.20
 ```
-R1#sh ip interface g0/1.20 | include access list
+R1#show ip interface g0/1.20 | include access list
   Outgoing access list is not set
   Inbound  access list is VLAN20-IN
 ```
 
 ##### VLAN 30 ACL applied on G0/1.30
 ```
-R1#sh ip interface g0/1.30 | include access list
+R1#show ip interface g0/1.30 | include access list
   Outgoing access list is not set
   Inbound  access list is VLAN30-IN
 ```
