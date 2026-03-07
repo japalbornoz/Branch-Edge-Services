@@ -1,48 +1,79 @@
 # Guest Policy Validation – Version 2
 
 ## Objective
-Validate that guest users in VLAN 30 can access approved services while being denied access to internal branch subnets.
+Validate that guest users in VLAN 30 can access approved services (DNS + public internet) while being denied access to internal branch subnets.
 
 ## Policy Summary
-Guest users are allowed to:
-
-- query the DNS server on `192.168.99.10`
-- access public/internet resources
+Guest users (VLAN 30) are allowed to:
+- resolve `www.branchlab.com` via the internal DNS server
+- access public resources (simulated internet)
 
 Guest users are denied access to:
+- access to internal branch VLANs (VLAN 10, VLAN 20)
+- general access to management/services resources
 
-- VLAN 10
-- VLAN 20
-- general access to VLAN 99
+## Enforcement Point
+In Version 2, guest policy is enforced on **R2**, applied inbound on the VLAN 30 gateway interface.
 
-## ACL Enforcement Point
-In Version 2, guest policy is enforced on R2 inbound on the VLAN 30 gateway interface.
-
-## Validation Tests
-
-### Allowed Tests
-- ping public web server by IP: `198.51.100.10`
-- ping public web server by name: `www.branchlab.com`
-
-### Denied Tests
-- ping VLAN 10 host
-- ping VLAN 20 host
-- ping management subnet resources directly
-
-## Expected Results
-- public web access succeeds
-- name resolution works
-- internal subnet reachability fails
-
-## Observed Result
-Validation succeeded. VLAN 30 users were able to reach the public web server and resolve its hostname, while traffic to internal branch subnets was denied by the guest access-control policy.
-
-## Technical Note
-DNS query permission does not imply ICMP permission to the DNS server itself. If DNS resolution works while direct ping to the DNS server fails, that behavior is consistent with the ACL design.
+## Verification Commands (VLAN 30 PC5)
+```text
+ping www.branchlab.com
+ping 192.168.20.21
+```
 
 ## Supporting Evidence
-Suggested evidence to include:
-- guest client ping to `198.51.100.10`
-- guest client ping to `www.branchlab.com`
-- failed guest ping to `192.168.20.21`
-- R2 ACL configuration
+### VLAN 30 PC5 → Public by Hostname (Allowed)
+```
+C:\>ping www.branchlab.com
+
+Pinging 198.51.100.10 with 32 bytes of data:
+
+Request timed out.
+Request timed out.
+Reply from 198.51.100.10: bytes=32 time<1ms TTL=125
+Reply from 198.51.100.10: bytes=32 time<1ms TTL=125
+
+Ping statistics for 198.51.100.10:
+    Packets: Sent = 4, Received = 2, Lost = 2 (50% loss)
+```
+```
+C:\>ping www.branchlab.com
+
+Pinging 198.51.100.10 with 32 bytes of data:
+
+Reply from 198.51.100.10: bytes=32 time<1ms TTL=125
+Reply from 198.51.100.10: bytes=32 time<1ms TTL=125
+Reply from 198.51.100.10: bytes=32 time<1ms TTL=125
+Reply from 198.51.100.10: bytes=32 time<1ms TTL=125
+
+Ping statistics for 198.51.100.10:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss)
+```
+
+### VLAN 30 PC5 → Internal VLAN 20 Host (Denied)
+```
+C:\>ping 192.168.20.21
+
+Pinging 192.168.20.21 with 32 bytes of data:
+
+Reply from 192.168.30.1: Destination host unreachable.
+Reply from 192.168.30.1: Destination host unreachable.
+Reply from 192.168.30.1: Destination host unreachable.
+Reply from 192.168.30.1: Destination host unreachable.
+
+Ping statistics for 192.168.20.21:
+    Packets: Sent = 4, Received = 0, Lost = 4 (100% loss)
+```
+
+### ACL Application Evidence
+```
+R2#show ip interface g0/1 | include access list
+  Outgoing access list is not set
+  Inbound  access list is VLAN30-IN
+```
+
+## Observed Result
+Validation succeeded. VLAN 30 clients were able to reach the public server by hostname while being denied access to internal branch VLAN resources. Guest restrictions were enforced at the correct policy point (R2, inbound on the VLAN 30 gateway interface).
+
+## Technical Note
+Initial timeouts are common in Packet Tracer due to ARP/NAT/DNS warm-up. Subsequent successful replies confirm correct name resolution and reachability.
