@@ -15,18 +15,16 @@ This validation confirms:
 In Version 2, VLAN 30 (GUEST) is moved behind R2. R2 acts as the default gateway for VLAN 30 and relays DHCP requests to R1 using `ip helper-address`. R1 remains the centralized DHCP server.
 
 ## Verification Commands
-
 ### On VLAN 30 PC5
 ```text
 ipconfig
 ```
-
 ### On R1
 ```
 show ip dhcp binding
 ```
 
-### Supporting Evidence
+## Supporting Evidence
 ### VLAN 30 PC5 DHCP Lease (Example)
 ```
 C:\>ipconfig
@@ -35,7 +33,7 @@ FastEthernet0 Connection:(default port)
 
    IPv4 Address....................: 192.168.30.21
    Subnet Mask.....................: 255.255.255.0
-   Default Gateway.................: 192.168.30.1
+   Default Gateway.................: 192.168.30.1     
 ```
 
 ### R1 DHCP Bindings (VLAN 30 and R2 WAN Lease)
@@ -49,7 +47,7 @@ IP address       Client-ID/              Lease expiration        Type
 192.168.20.23    0000.0020.DDDD           --                     Automatic
 192.168.30.21    0000.0030.FFFF           --                     Automatic
 192.168.30.22    0000.0030.EEEE           --                     Automatic
-203.0.114.2      0002.1602.B703           --                     Automatic
+203.0.114.2      0002.1602.B703           --                     Automatic 
 ```
 
 ## Observed Result
