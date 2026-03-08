@@ -305,12 +305,16 @@ Through this project, I practiced how branch edge services work together to supp
 
 ---
 
-## Folder Structure
-- `/topology` – topology image and addressing plan
-- `/configs` – device configurations
-- `/validation` – command outputs and test results
-- `/troubleshooting` – failure scenarios and fixes
-- `/diagrams` – logical diagram files
+## Quick Navigation
+- [Topology](/topology) – topology images and addressing plan  
+- [Configs](/configs) – device configuration exports (v1 and v2)
+  - [Version 1 Configs](/configs/version1)
+  - [Version 2 Configs](/configs/version2)
+- [Validation](/validation) – command outputs and test results (v1 and v2)
+  - [Version 1 Validation](/validation/version1)
+  - [Version 2 Validation](/validation/version2)
+- [Troubleshooting](/troubleshooting) – failure scenarios and fixes  
+- [Diagrams](/diagrams) – logical diagrams (Mermaid)
 
 ---
 
